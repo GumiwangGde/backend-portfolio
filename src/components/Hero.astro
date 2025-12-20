@@ -121,16 +121,16 @@
 
 <script>
   const codeContent = `
-    var builder = WebApplication.CreateBuilder(args);
-    var app = builder.Build();
+  var builder = WebApplication.CreateBuilder(args);
+  var app = builder.Build();
+  
+  app.MapGet("/api/users", () => new { 
+      Name = "Gumiwang Gde", 
+      Role = "Software Engineer" 
+  });
 
-    app.MapGet("/api/users", () => new { 
-        Name = "Gumiwang Gde", 
-        Role = "Software Engineer" 
-    });
-
-    app.Run();
-    `;
+  app.Run();
+  `;
 
   const codeElement = document.getElementById("typing-code");
   let index = 0;
