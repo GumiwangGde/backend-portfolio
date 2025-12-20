@@ -1,0 +1,63 @@
+---
+const skillCategories = [
+  {
+    title: "Programming Languages",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+    items: ["PHP", "Node.js", "TypeScript", "C#", "Dart"],
+  },
+  {
+    title: "Frameworks",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`,
+    items: ["Laravel", "Express", ".NET", "Flutter"],
+  },
+  {
+    title: "Databases",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>`,
+    items: ["PostgreSQL", "MySQL", "MongoDB", "Redis"],
+  },
+  {
+    title: "DevOps & Tools",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><path d="M17.5 19a3.5 3.5 0 1 1-5.83-2.66 10.13 10.13 0 0 0-1.67-2.68 3.5 3.5 0 1 1 2.33-5.63 10.11 10.11 0 0 0 2.67 2.67 3.5 3.5 0 1 1 2.5 5.33Z"/><path d="M12 10V6"/><path d="M12 18v-4"/></svg>`,
+    items: ["Linux", "Docker", "Git", "GitLab & GitHub", "CI / CD"],
+  },
+];
+---
+
+<section id="skills" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="mb-16">
+      <h2 class="text-3xl font-bold text-[#111827] relative inline-block">
+        Skills & Tech Stack
+        <span
+          class="absolute -bottom-2 left-0 w-full h-1 bg-cyan-400 rounded-full"
+        ></span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {
+        skillCategories.map((category) => (
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-cyan-50 rounded-lg flex items-center justify-center shrink-0">
+                <Fragment set:html={category.icon} />
+              </div>
+              <h3 class="font-bold text-[#111827] text-sm tracking-tight uppercase">
+                {category.title}
+              </h3>
+            </div>
+
+            <div class="space-y-3">
+              {category.items.map((skill) => (
+                <div class="px-5 py-3 bg-white border border-slate-100 rounded-xl text-slate-600 text-sm font-medium shadow-sm transition-all duration-300 hover:bg-cyan-50 hover:border-cyan-400 hover:text-cyan-700 hover:shadow-md hover:shadow-cyan-100"
+                >
+                  {skill}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

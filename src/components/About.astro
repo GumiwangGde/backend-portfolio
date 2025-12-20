@@ -1,0 +1,87 @@
+---
+import { Image } from "astro:assets";
+import myProfilePhoto from "../assets/my-photo.jpeg";
+
+const features = [
+  {
+    title: "Performance",
+    desc: "Optimization-driven development with focus on speed and efficiency.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  },
+  {
+    title: "Clean Code",
+    desc: "SOLID principles and clean architecture patterns for maintainability.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
+  },
+  {
+    title: "Reliability",
+    desc: "Comprehensive testing and robust monitoring systems.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  },
+];
+---
+
+<section id="about" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="mb-16">
+      <h2 class="text-3xl font-bold text-[#111827] relative inline-block">
+        About Me
+        <span
+          class="absolute -bottom-2 left-0 w-full h-1 bg-cyan-400 rounded-full"
+        ></span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+      <div class="lg:col-span-4 flex justify-center lg:justify-start">
+        <div class="relative">
+          <div
+            class="absolute -inset-4 bg-cyan-100/50 rounded-full blur-3xl opacity-60"
+          >
+          </div>
+          <div
+            class="relative w-64 h-64 rounded-full bg-white shadow-2xl border-4 border-white overflow-hidden"
+          >
+            <Image
+              src={myProfilePhoto}
+              alt="Gumiwang Gde Derazatna"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-8 space-y-8">
+        <div class="space-y-6 text-slate-600 leading-relaxed text-lg">
+          <p>
+            I'm a backend developer with a passion for building scalable,
+            high-performance systems. I specialize in designing RESTful APIs,
+            microservices architectures, and distributed systems that handle
+            complex business logic with ease.
+          </p>
+          <p>
+            My work focuses on creating robust, maintainable solutions that
+            solve real business problems while maintaining clean code principles
+            and architectural best practices.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+          {
+            features.map((item) => (
+              <div class="p-6 bg-white border border-slate-100 rounded-2xl hover:shadow-lg hover:shadow-slate-100 transition-all duration-300 group">
+                <div class="w-12 h-12 bg-cyan-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-cyan-100 transition-colors">
+                  <Fragment set:html={item.icon} />
+                </div>
+                <h3 class="font-bold text-[#111827] mb-1">{item.title}</h3>
+                <p class="text-[13px] text-slate-500 leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

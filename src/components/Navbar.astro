@@ -1,0 +1,95 @@
+---
+const navItems = [
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Experience", href: "#experience" },
+  { name: "Contact", href: "#contact" },
+];
+---
+
+<nav
+  class="bg-white/80 backdrop-blur-md border-b border-gray-100 fixed w-full top-0 z-50"
+>
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="flex justify-between items-center h-20">
+      <div class="flex items-center gap-3">
+        <div
+          class="bg-[#111827] text-white w-10 h-10 flex items-center justify-center rounded-lg font-bold text-sm shrink-0"
+        >
+          GD
+        </div>
+        <span
+          class="font-semibold text-[#1f2937] text-lg tracking-tight hidden sm:block"
+        >
+          Gumiwang Gde Derazatna
+        </span>
+      </div>
+
+      <ul class="hidden md:flex gap-8">
+        {
+          navItems.map((item) => (
+            <li class="relative group">
+              <a
+                href={item.href}
+                class="text-sm font-medium text-slate-500 hover:text-[#111827] transition-colors duration-300"
+              >
+                {item.name}
+              </a>
+              <span class="absolute -bottom-1 left-0 h-0.5 bg-cyan-500 w-0 group-hover:w-full transition-all duration-300 ease-out" />
+            </li>
+          ))
+        }
+      </ul>
+
+      <button
+        id="menu-btn"
+        class="md:hidden p-2 text-slate-600 focus:outline-none"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div
+      id="mobile-menu"
+      class="hidden md:hidden pb-6 transition-all duration-300"
+    >
+      <ul class="flex flex-col gap-4">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-base font-medium text-slate-600 hover:text-cyan-600 block transition-colors"
+              >
+                {item.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const btn = document.getElementById("menu-btn");
+  const menu = document.getElementById("mobile-menu");
+
+  btn?.addEventListener("click", () => {
+    menu?.classList.toggle("hidden");
+  });
+</script>
