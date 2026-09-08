@@ -1,35 +1,88 @@
 ---
-const { title } = Astro.props;
 import Navbar from "../components/Navbar.astro";
+import EclipseArtwork from "../components/EclipseArtwork.astro";
 import "../styles/global.css";
+import { profile } from "../data/profile";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = `${profile.name} — ${profile.titles[0]} & ${profile.titles[1]}`,
+  description = profile.tagline
+} = Astro.props;
+
+const currentYear = new Date().getFullYear();
 ---
 
-<html lang="id">
+<!doctype html>
+<html lang="en" class="dark scroll-smooth bg-[#050b14] text-slate-200">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Gumiwang Gde | CTO & Backend Developer</title>
-    <meta name="title" content="Gumiwang Gde | CTO & Backend Developer" />
-    <meta name="description" content="Backend Engineer & CTO at Neurobyte. Expert in .NET, Node.js, and Distributed Systems architecture."/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content={profile.name} />
     <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://portfolio.gugum.my.id/" />
-    <meta property="og:title" content="Gumiwang Gde | CTO & Backend Developer"/>
-    <meta property="og:description" content="Explore my professional journey in backend development and system architecture."/>
-    <meta property="og:image" content="https://portfolio.gugum.my.id/og-image.jpg"/>
-    <meta name="google-site-verification" content="qyyi6TaTO3Gp0ZiOp9n0HR4lBkCxHXuVt5zEX8St12o"/>
-    <meta name="viewport" content="width=device-width" />
-    <title>{title}</title>
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://portfolio.gugum.my.id/og-image.jpg" />
+
+    <!-- Google Fonts: Instrument Serif, Inter, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="qyyi6TaTO3Gp0ZiOp9n0HR4lBkCxHXuVt5zEX8St12o" />
   </head>
-  <body>
+  <body class="bg-[#050b14] text-slate-200 antialiased min-h-screen relative overflow-x-hidden selection:bg-sky-400 selection:text-[#050b14]">
+    
+    <!-- Eclipse Halo & 3D Sculpture Background -->
+    <EclipseArtwork />
+
+    <!-- Architectural Hairline Grid Lines (Deep Midnight & Ice Platinum) -->
+    <div class="fixed inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-2 md:grid-cols-4 gap-0" aria-hidden="true">
+      <div class="border-l border-sky-400/[0.04] h-full"></div>
+      <div class="border-l border-sky-400/[0.04] h-full"></div>
+      <div class="border-l border-sky-400/[0.04] h-full"></div>
+      <div class="border-l border-r border-sky-400/[0.04] h-full"></div>
+    </div>
+
+    <!-- Minimalist Editorial Navigation -->
     <Navbar />
 
-    <main>
+    <!-- Main Editorial Content -->
+    <main class="relative z-10">
       <slot />
     </main>
 
-    <footer class="p-8 text-center text-gray-500">
-      &copy; 2024 - Portfolio Backend Developer
+    <!-- Editorial Footer -->
+    <footer class="relative z-10 border-t border-sky-500/[0.1] bg-[#050b14]/90 backdrop-blur-md py-12 px-6 sm:px-12">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 font-mono text-[11px] text-slate-400 tracking-wider uppercase">
+        <div class="flex items-center gap-4">
+          <span class="text-white font-medium">{profile.name}</span>
+          <span class="text-slate-500">/</span>
+          <span class="text-slate-300">{profile.titles[0]}</span>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <span>SURABAYA, INDONESIA</span>
+          <span class="text-sky-400/80">•</span>
+          <span>© {currentYear}</span>
+        </div>
+      </div>
     </footer>
+
   </body>
 </html>

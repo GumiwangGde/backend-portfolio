@@ -1,57 +1,70 @@
 ---
-const skillCategories = [
-  {
-    title: "Programming Languages",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
-    items: ["PHP", "Node.js", "TypeScript", "C#", "Dart"],
-  },
-  {
-    title: "Frameworks",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`,
-    items: ["Laravel", "Express", ".NET", "Flutter"],
-  },
-  {
-    title: "Databases",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>`,
-    items: ["PostgreSQL", "MySQL", "MongoDB", "Redis"],
-  },
-  {
-    title: "DevOps & Tools",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><path d="M17.5 19a3.5 3.5 0 1 1-5.83-2.66 10.13 10.13 0 0 0-1.67-2.68 3.5 3.5 0 1 1 2.33-5.63 10.11 10.11 0 0 0 2.67 2.67 3.5 3.5 0 1 1 2.5 5.33Z"/><path d="M12 10V6"/><path d="M12 18v-4"/></svg>`,
-    items: ["Linux", "Docker", "Git", "GitLab & GitHub", "CI / CD"],
-  },
-];
+import { skillCategories } from "../data/skills";
+
+const iconMap: Record<string, string> = {
+  code: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  server: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>`,
+  database: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>`,
+  cpu: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>`
+};
 ---
 
-<section id="skills" class="py-24 bg-white">
+<section id="skills" class="py-24 relative z-10">
   <div class="max-w-6xl mx-auto px-6">
     <div class="mb-16">
-      <h2 class="text-3xl font-bold text-[#111827] relative inline-block">
-        Skills & Tech Stack
-        <span
-          class="absolute -bottom-2 left-0 w-full h-1 bg-cyan-400 rounded-full"
-        ></span>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono font-medium mb-3">
+        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+        TECHNICAL CAPABILITIES
+      </div>
+      <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+        Skills & <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Tech Stack</span>
       </h2>
+      <p class="mt-2 text-slate-400 text-sm font-mono">
+        Multi-language and enterprise backend infrastructure competencies.
+      </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- 4 Category Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {
         skillCategories.map((category) => (
-          <div class="space-y-6">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-cyan-50 rounded-lg flex items-center justify-center shrink-0">
-                <Fragment set:html={category.icon} />
+          <div class="bg-slate-900/60 border border-slate-800/80 rounded-3xl p-6 backdrop-blur-xl hover:border-cyan-500/40 transition-all duration-300 flex flex-col group hover:shadow-xl hover:shadow-cyan-500/5">
+            <!-- Header -->
+            <div class="flex items-center gap-3 pb-4 border-b border-slate-800">
+              <div class="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <Fragment set:html={iconMap[category.icon]} />
               </div>
-              <h3 class="font-bold text-[#111827] text-sm tracking-tight uppercase">
-                {category.title}
-              </h3>
+              <div>
+                <h3 class="font-bold text-white text-sm tracking-tight font-mono">
+                  {category.title}
+                </h3>
+                <span class="text-[10px] text-slate-500 font-mono">
+                  {category.skills.length} competencies
+                </span>
+              </div>
             </div>
 
-            <div class="space-y-3">
-              {category.items.map((skill) => (
-                <div class="px-5 py-3 bg-white border border-slate-100 rounded-xl text-slate-600 text-sm font-medium shadow-sm transition-all duration-300 hover:bg-cyan-50 hover:border-cyan-400 hover:text-cyan-700 hover:shadow-md hover:shadow-cyan-100"
-                >
-                  {skill}
+            <!-- Skills List -->
+            <div class="space-y-2.5 pt-5 grow">
+              {category.skills.map((skill) => (
+                <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800/60 hover:border-slate-700 hover:bg-slate-900/80 transition-all duration-200">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="text-xs font-semibold text-slate-200 font-mono">
+                      {skill.name}
+                    </span>
+                    <span class={`text-[9px] font-mono px-1.5 py-0.5 rounded border ${
+                      skill.level === "Advanced" 
+                        ? "bg-cyan-500/10 text-cyan-400 border-cyan-500/20" 
+                        : "bg-slate-800 text-slate-400 border-slate-700"
+                    }`}>
+                      {skill.level}
+                    </span>
+                  </div>
+                  {skill.description && (
+                    <div class="text-[11px] text-slate-400 mt-1 leading-snug">
+                      {skill.description}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

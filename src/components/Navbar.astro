@@ -1,95 +1,101 @@
 ---
-const navItems = [
-  { name: "Home", href: "#home" },
+import { profile } from "../data/profile";
+
+const navLinks = [
   { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
+  { name: "Selected Work", href: "#work" },
   { name: "Experience", href: "#experience" },
   { name: "Contact", href: "#contact" },
 ];
 ---
 
-<nav
-  class="bg-white/80 backdrop-blur-md border-b border-gray-100 fixed w-full top-0 z-50"
->
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="flex justify-between items-center h-20">
-      <div class="flex items-center gap-3">
-        <div
-          class="bg-[#111827] text-white w-10 h-10 flex items-center justify-center rounded-lg font-bold text-sm shrink-0"
-        >
-          GD
-        </div>
-        <span
-          class="font-semibold text-[#1f2937] text-lg tracking-tight hidden sm:block"
-        >
-          Gumiwang Gde Derazatna
+<header class="fixed top-0 inset-x-0 z-50 bg-[#050b14]/75 backdrop-blur-md border-b border-sky-500/[0.08] transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 sm:px-12">
+    <div class="flex items-center justify-between h-20">
+      
+      <!-- Brandmark -->
+      <a href="#home" class="group flex items-center gap-3">
+        <span class="font-mono text-xs font-semibold tracking-[0.25em] text-white uppercase group-hover:text-sky-300 transition-colors">
+          GUMIWANG
         </span>
+      </a>
+
+      <!-- Desktop Links -->
+      <nav class="hidden md:flex items-center gap-8 font-mono text-[11px] tracking-[0.18em] uppercase text-slate-400">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="hover:text-white transition-colors relative py-1"
+            >
+              {link.name}
+            </a>
+          ))
+        }
+      </nav>
+
+      <!-- Right Indicator & Contact Trigger -->
+      <div class="flex items-center gap-6">
+        <a
+          href={`mailto:${profile.email}`}
+          class="hidden sm:inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase text-slate-400 hover:text-sky-300 transition-colors"
+        >
+          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+          <span>AVAILABLE FOR ROLES</span>
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-toggle"
+          class="md:hidden text-slate-400 hover:text-white p-2 focus:outline-none"
+          aria-label="Toggle Navigation"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h16M4 16h16" />
+          </svg>
+        </button>
       </div>
 
-      <ul class="hidden md:flex gap-8">
-        {
-          navItems.map((item) => (
-            <li class="relative group">
-              <a
-                href={item.href}
-                class="text-sm font-medium text-slate-500 hover:text-[#111827] transition-colors duration-300"
-              >
-                {item.name}
-              </a>
-              <span class="absolute -bottom-1 left-0 h-0.5 bg-cyan-500 w-0 group-hover:w-full transition-all duration-300 ease-out" />
-            </li>
-          ))
-        }
-      </ul>
-
-      <button
-        id="menu-btn"
-        class="md:hidden p-2 text-slate-600 focus:outline-none"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
-      </button>
     </div>
 
+    <!-- Mobile Dropdown -->
     <div
-      id="mobile-menu"
-      class="hidden md:hidden pb-6 transition-all duration-300"
+      id="mobile-dropdown"
+      class="hidden md:hidden py-6 border-t border-sky-500/[0.08] bg-[#050b14]/95 space-y-4 font-mono text-xs tracking-[0.2em] uppercase"
     >
-      <ul class="flex flex-col gap-4">
-        {
-          navItems.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class="text-base font-medium text-slate-600 hover:text-cyan-600 block transition-colors"
-              >
-                {item.name}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="mobile-link block text-slate-400 hover:text-sky-300 py-2"
+          >
+            {link.name}
+          </a>
+        ))
+      }
+      <a
+        href={`mailto:${profile.email}`}
+        class="mobile-link block text-white pt-2 border-t border-sky-500/[0.08]"
+      >
+        LET'S CONNECT ↗
+      </a>
     </div>
+
   </div>
-</nav>
+</header>
 
 <script>
-  const btn = document.getElementById("menu-btn");
-  const menu = document.getElementById("mobile-menu");
+  const toggle = document.getElementById("mobile-toggle");
+  const dropdown = document.getElementById("mobile-dropdown");
+  const mobileLinks = document.querySelectorAll(".mobile-link");
 
-  btn?.addEventListener("click", () => {
-    menu?.classList.toggle("hidden");
+  toggle?.addEventListener("click", () => {
+    dropdown?.classList.toggle("hidden");
+  });
+
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      dropdown?.classList.add("hidden");
+    });
   });
 </script>

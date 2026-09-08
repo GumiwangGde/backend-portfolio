@@ -1,0 +1,40 @@
+---
+// EclipseArtwork.astro - Deep Midnight & Ice Platinum Crescent Halo + 3D Sculpture
+---
+
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+  <!-- Glowing Ice Platinum Eclipse Crescent (Top-Left Accent) -->
+  <div class="absolute -top-[12%] -left-[22%] sm:-left-[12%] lg:-left-[6%] w-[680px] sm:w-[880px] lg:w-[1150px] h-[680px] sm:h-[880px] lg:h-[1150px] rounded-full border border-sky-400/20 opacity-50 blur-[1px]"></div>
+  
+  <div class="absolute -top-[10%] -left-[20%] sm:-left-[10%] lg:-left-[5%] w-[620px] sm:w-[820px] lg:w-[1050px] h-[620px] sm:h-[820px] lg:h-[1050px] rounded-full border border-sky-300/35 opacity-70"></div>
+  
+  <!-- Ice Platinum Radial Aura Glow -->
+  <div class="absolute top-[2%] -left-[12%] w-[550px] h-[750px] bg-gradient-to-r from-sky-400/15 via-blue-500/8 to-transparent rounded-full blur-3xl opacity-40"></div>
+
+  <!-- Deep Midnight Ambient Gradient Base -->
+  <div class="absolute inset-0 bg-radial from-transparent via-[#050b14]/50 to-[#050b14]"></div>
+
+  <!-- Right Side: 3D Metallic Sculpture Canvas -->
+  <div 
+    id="sculpture-3d-container" 
+    class="absolute right-0 top-0 bottom-0 w-full lg:w-[55%] h-full opacity-75 lg:opacity-95 pointer-events-auto cursor-grab active:cursor-grabbing"
+  ></div>
+
+  <!-- Vignette overlay for cinematic depth -->
+  <div class="absolute inset-0 bg-gradient-to-b from-[#050b14]/40 via-transparent to-[#050b14]/90 pointer-events-none"></div>
+</div>
+
+<script>
+  import { ThreeSculptureScene } from "../scripts/three-sculpture";
+
+  const container = document.getElementById("sculpture-3d-container");
+  let sceneInstance: ThreeSculptureScene | null = null;
+
+  if (container) {
+    sceneInstance = new ThreeSculptureScene(container);
+  }
+
+  document.addEventListener("astro:before-swap", () => {
+    sceneInstance?.destroy();
+  });
+</script>

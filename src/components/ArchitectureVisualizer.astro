@@ -1,0 +1,247 @@
+---
+// ArchitectureVisualizer.astro
+---
+
+<section id="architecture" class="py-24 relative z-10">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono font-medium mb-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+          LIVE SYSTEM SIMULATOR
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+          Distributed Architecture <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Playground</span>
+        </h2>
+        <p class="mt-3 text-slate-400 text-base max-w-2xl">
+          Simulate real-time data flows across microservices, asynchronous message queues, and caching layers with sub-millisecond precision.
+        </p>
+      </div>
+
+      <!-- Simulator Action Controls -->
+      <div class="flex flex-wrap gap-2.5">
+        <button
+          id="btn-single-req"
+          class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-lg cursor-pointer"
+        >
+          <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+          Send Request (HTTP)
+        </button>
+        <button
+          id="btn-spike-req"
+          class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-mono text-xs font-bold flex items-center gap-2 transition-all active:scale-95 shadow-lg shadow-cyan-500/20 cursor-pointer"
+        >
+          <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+          Simulate Spike (5k RPS)
+        </button>
+        <button
+          id="btn-cache-req"
+          class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-lg cursor-pointer"
+        >
+          <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+          Redis Cache Hit
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Simulator Box -->
+    <div class="bg-slate-900/80 border border-slate-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden">
+      <!-- Top Metrics Dashboard -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8 pb-6 border-b border-slate-800">
+        <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800/80">
+          <div class="text-[11px] font-mono text-slate-400 uppercase">Avg Latency</div>
+          <div id="metric-latency" class="text-xl font-bold font-mono text-cyan-400 mt-1">18.4 ms</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800/80">
+          <div class="text-[11px] font-mono text-slate-400 uppercase">Throughput</div>
+          <div id="metric-tps" class="text-xl font-bold font-mono text-emerald-400 mt-1">1,240 req/s</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800/80">
+          <div class="text-[11px] font-mono text-slate-400 uppercase">Cache Hit Rate</div>
+          <div id="metric-cache" class="text-xl font-bold font-mono text-rose-400 mt-1">98.6%</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800/80">
+          <div class="text-[11px] font-mono text-slate-400 uppercase">Queue Backlog</div>
+          <div id="metric-queue" class="text-xl font-bold font-mono text-amber-400 mt-1">0 msg (Healthy)</div>
+        </div>
+      </div>
+
+      <!-- Visual Pipeline Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 items-center relative my-6">
+        <!-- Node 1: Client Ingress -->
+        <div id="pipe-node-1" class="pipe-node p-5 rounded-2xl bg-slate-950/80 border border-slate-800 flex flex-col items-center text-center transition-all duration-300 relative group hover:border-cyan-500/50">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-mono text-lg mb-3 group-hover:scale-110 transition-transform">
+            ⚡
+          </div>
+          <div class="text-xs font-mono font-bold text-slate-200">1. Client / Web</div>
+          <div class="text-[11px] text-slate-500 mt-1">HTTP / WebSocket</div>
+          <div class="mt-3 text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">Payload: JSON</div>
+        </div>
+
+        <!-- Node 2: Gateway & Auth -->
+        <div id="pipe-node-2" class="pipe-node p-5 rounded-2xl bg-slate-950/80 border border-slate-800 flex flex-col items-center text-center transition-all duration-300 relative group hover:border-purple-500/50">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 font-mono text-lg mb-3 group-hover:scale-110 transition-transform">
+            🛡️
+          </div>
+          <div class="text-xs font-mono font-bold text-slate-200">2. Gateway & RBAC</div>
+          <div class="text-[11px] text-slate-500 mt-1">JWT & Rate Limiting</div>
+          <div class="mt-3 text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950/40 text-purple-300 border border-purple-800/40">Zod Schema Valid</div>
+        </div>
+
+        <!-- Node 3: Core API Service -->
+        <div id="pipe-node-3" class="pipe-node p-5 rounded-2xl bg-slate-950/80 border border-slate-800 flex flex-col items-center text-center transition-all duration-300 relative group hover:border-blue-500/50">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 font-mono text-lg mb-3 group-hover:scale-110 transition-transform">
+            ⚙️
+          </div>
+          <div class="text-xs font-mono font-bold text-slate-200">3. .NET / Node.js API</div>
+          <div class="text-[11px] text-slate-500 mt-1">Domain Logic & Orchestration</div>
+          <div class="mt-3 text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/40 text-blue-300 border border-blue-800/40">Async Handler</div>
+        </div>
+
+        <!-- Node 4: RabbitMQ Queue -->
+        <div id="pipe-node-4" class="pipe-node p-5 rounded-2xl bg-slate-950/80 border border-slate-800 flex flex-col items-center text-center transition-all duration-300 relative group hover:border-emerald-500/50">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-mono text-lg mb-3 group-hover:scale-110 transition-transform">
+            🐇
+          </div>
+          <div class="text-xs font-mono font-bold text-slate-200">4. RabbitMQ Broker</div>
+          <div class="text-[11px] text-slate-500 mt-1">Pub/Sub & Worker Pool</div>
+          <div class="mt-3 text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/40 text-emerald-300 border border-emerald-800/40">Event-Driven</div>
+        </div>
+
+        <!-- Node 5: Storage (PostgreSQL & Redis) -->
+        <div id="pipe-node-5" class="pipe-node p-5 rounded-2xl bg-slate-950/80 border border-slate-800 flex flex-col items-center text-center transition-all duration-300 relative group hover:border-amber-500/50">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-mono text-lg mb-3 group-hover:scale-110 transition-transform">
+            🗄️
+          </div>
+          <div class="text-xs font-mono font-bold text-slate-200">5. PostgreSQL + Redis</div>
+          <div class="text-[11px] text-slate-500 mt-1">ACID DB & Cache Layer</div>
+          <div class="mt-3 text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950/40 text-amber-300 border border-amber-800/40">WAL & In-Memory</div>
+        </div>
+      </div>
+
+      <!-- Live Terminal Console Output -->
+      <div class="mt-8 pt-6 border-t border-slate-800">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+            <span class="text-xs font-mono text-slate-400 ml-2">stdout // live_telemetry.log</span>
+          </div>
+          <button id="btn-clear-logs" class="text-[11px] font-mono text-slate-500 hover:text-slate-300 transition-colors">
+            Clear Logs
+          </button>
+        </div>
+
+        <div id="terminal-logs" class="bg-slate-950 rounded-2xl p-4 font-mono text-xs text-slate-300 h-36 overflow-y-auto space-y-1.5 border border-slate-800/80 shadow-inner">
+          <div class="text-emerald-400">[SYSTEM READY] Distributed Cluster initialized. Listening for ingress traffic on port 443...</div>
+          <div class="text-slate-500">[WORKER POOL] 8 background consumer threads listening on AMQP channel 'bidmaster.events'...</div>
+          <div class="text-slate-500">[CACHE] Redis connected to tcp://127.0.0.1:6379 (Ping: 0.2ms)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const btnSingle = document.getElementById("btn-single-req");
+  const btnSpike = document.getElementById("btn-spike-req");
+  const btnCache = document.getElementById("btn-cache-req");
+  const btnClear = document.getElementById("btn-clear-logs");
+  const terminalLogs = document.getElementById("terminal-logs");
+
+  const metricLatency = document.getElementById("metric-latency");
+  const metricTps = document.getElementById("metric-tps");
+  const metricCache = document.getElementById("metric-cache");
+  const metricQueue = document.getElementById("metric-queue");
+
+  const nodes = [1, 2, 3, 4, 5].map((id) => document.getElementById(`pipe-node-${id}`));
+
+  function logMessage(text: string, color = "text-slate-300") {
+    if (!terminalLogs) return;
+    const time = new Date().toISOString().split("T")[1].slice(0, 8);
+    const row = document.createElement("div");
+    row.className = `${color} leading-relaxed`;
+    row.textContent = `[${time}] ${text}`;
+    terminalLogs.appendChild(row);
+    terminalLogs.scrollTop = terminalLogs.scrollHeight;
+  }
+
+  function highlightNode(index: number, duration = 300) {
+    const el = nodes[index];
+    if (!el) return;
+    el.classList.add("ring-2", "ring-cyan-400", "scale-105", "shadow-lg", "shadow-cyan-500/30");
+    setTimeout(() => {
+      el.classList.remove("ring-2", "ring-cyan-400", "scale-105", "shadow-lg", "shadow-cyan-500/30");
+    }, duration);
+  }
+
+  btnSingle?.addEventListener("click", () => {
+    logMessage("POST /api/v1/orders - Ingress packet received from Client", "text-cyan-400");
+    highlightNode(0);
+
+    setTimeout(() => {
+      logMessage("Gateway validated JWT token & Zod payload in 2.1ms", "text-purple-400");
+      highlightNode(1);
+    }, 150);
+
+    setTimeout(() => {
+      logMessage("API Service executed business domain logic", "text-blue-400");
+      highlightNode(2);
+    }, 300);
+
+    setTimeout(() => {
+      logMessage("RabbitMQ published event 'order.created' to exchange", "text-emerald-400");
+      highlightNode(3);
+    }, 450);
+
+    setTimeout(() => {
+      logMessage("PostgreSQL transaction committed with SERIALIZABLE isolation. Response 201 Created (14.2ms)", "text-amber-400");
+      highlightNode(4);
+      if (metricLatency) metricLatency.textContent = "14.2 ms";
+      if (metricTps) metricTps.textContent = "1,850 req/s";
+    }, 600);
+  });
+
+  btnSpike?.addEventListener("click", () => {
+    logMessage("🚨 k6 LOAD SPIKE: 5,000 concurrent Virtual Users initiated!", "text-amber-400 font-bold");
+    if (metricTps) metricTps.textContent = "5,420 req/s";
+    if (metricQueue) metricQueue.textContent = "124 msgs (Consuming)";
+
+    nodes.forEach((n, i) => {
+      setTimeout(() => {
+        n?.classList.add("ring-2", "ring-amber-400", "shadow-lg", "shadow-amber-500/40");
+        setTimeout(() => {
+          n?.classList.remove("ring-2", "ring-amber-400", "shadow-lg", "shadow-amber-500/40");
+        }, 800);
+      }, i * 100);
+    });
+
+    setTimeout(() => {
+      logMessage("Auto-scaling: .NET worker thread pool expanded (16 consumers active)", "text-cyan-400");
+    }, 400);
+
+    setTimeout(() => {
+      logMessage("Zero packet drops. All 5,000 tasks processed with 0.00% error rate.", "text-emerald-400 font-bold");
+      if (metricQueue) metricQueue.textContent = "0 msg (Healthy)";
+      if (metricLatency) metricLatency.textContent = "26.8 ms";
+    }, 1200);
+  });
+
+  btnCache?.addEventListener("click", () => {
+    logMessage("GET /api/v1/auctions/latest - Ingress routed to Redis Cache", "text-rose-400");
+    highlightNode(0);
+    setTimeout(() => {
+      highlightNode(4);
+      logMessage("Redis Cache HIT (Key: 'auction:active:9812') -> Served in 0.48ms! PostgreSQL bypassed.", "text-emerald-400");
+      if (metricLatency) metricLatency.textContent = "0.48 ms";
+      if (metricCache) metricCache.textContent = "99.4%";
+    }, 120);
+  });
+
+  btnClear?.addEventListener("click", () => {
+    if (terminalLogs) {
+      terminalLogs.innerHTML = `<div class="text-slate-500">[CONSOLE CLEARED] Ready for new telemetry...</div>`;
+    }
+  });
+</script>

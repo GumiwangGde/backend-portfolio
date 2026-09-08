@@ -1,0 +1,105 @@
+---
+// ThreeHeroScene.astro
+---
+
+<div class="relative w-full h-[460px] md:h-[540px] lg:h-[580px] rounded-3xl overflow-hidden border border-cyan-500/20 bg-slate-950/60 shadow-2xl shadow-cyan-950/40 backdrop-blur-xl group">
+  <!-- Top HUD Bar -->
+  <div class="absolute top-0 left-0 right-0 z-20 px-5 py-3.5 bg-slate-900/80 border-b border-slate-800/80 flex items-center justify-between backdrop-blur-md">
+    <div class="flex items-center gap-2.5">
+      <span class="flex h-2.5 w-2.5 relative">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+      </span>
+      <span class="text-xs font-mono font-semibold text-slate-300 tracking-wide">
+        TOPOLOGY_VIEWER <span class="text-cyan-400 font-bold">// 3D CLUSTER</span>
+      </span>
+    </div>
+
+    <div class="flex items-center gap-3 text-[11px] font-mono text-slate-400">
+      <span class="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-slate-800/80 border border-slate-700/50">
+        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> 7 Active Nodes
+      </span>
+      <span class="text-cyan-400/90 font-medium">Interactive 3D</span>
+    </div>
+  </div>
+
+  <!-- ThreeJS Canvas Container -->
+  <div id="three-hero-container" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+
+  <!-- Dynamic Node Inspector Card (Overlaid at the bottom) -->
+  <div 
+    id="node-inspector"
+    class="absolute bottom-4 left-4 right-4 z-20 p-4 rounded-2xl bg-slate-900/90 border border-slate-700/60 backdrop-blur-xl shadow-xl transition-all duration-300 pointer-events-none sm:pointer-events-auto"
+  >
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      <div class="flex items-center gap-3">
+        <div id="node-badge-dot" class="w-3 h-3 rounded-full bg-cyan-400 shadow-md shadow-cyan-400/50 animate-pulse"></div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h4 id="node-title" class="text-sm font-bold text-white font-mono">API Gateway & Edge</h4>
+            <span id="node-type" class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+              Ingress / Routing
+            </span>
+          </div>
+          <p id="node-desc" class="text-xs text-slate-400 mt-0.5 line-clamp-1">
+            Reverse proxy, rate limiting, and SSL termination handling ingress traffic.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 self-start sm:self-center shrink-0">
+        <span id="node-metric" class="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-cyan-300 border border-slate-700/80">
+          Sub-5ms Latency • 100% Ingress
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ambient Glow overlay -->
+  <div class="absolute inset-0 bg-radial from-cyan-500/5 via-transparent to-transparent pointer-events-none"></div>
+  <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-slate-950/80 to-transparent pointer-events-none"></div>
+</div>
+
+<script>
+  import { ThreeNetworkScene, ARCHITECTURE_NODES } from "../scripts/three-network";
+
+  const container = document.getElementById("three-hero-container");
+  const nodeTitle = document.getElementById("node-title");
+  const nodeType = document.getElementById("node-type");
+  const nodeDesc = document.getElementById("node-desc");
+  const nodeMetric = document.getElementById("node-metric");
+  const nodeBadgeDot = document.getElementById("node-badge-dot");
+
+  let sceneInstance: ThreeNetworkScene | null = null;
+
+  if (container) {
+    sceneInstance = new ThreeNetworkScene(container, (hoveredNode) => {
+      if (hoveredNode) {
+        if (nodeTitle) nodeTitle.textContent = hoveredNode.name;
+        if (nodeType) nodeType.textContent = hoveredNode.type;
+        if (nodeDesc) nodeDesc.textContent = hoveredNode.description;
+        if (nodeMetric) nodeMetric.textContent = hoveredNode.metrics;
+        if (nodeBadgeDot) {
+          nodeBadgeDot.style.backgroundColor = `#${hoveredNode.color.toString(16).padStart(6, "0")}`;
+          nodeBadgeDot.style.boxShadow = `0 0 12px #${hoveredNode.color.toString(16).padStart(6, "0")}`;
+        }
+      } else {
+        // Fallback default node (Gateway)
+        const defaultNode = ARCHITECTURE_NODES[0];
+        if (nodeTitle) nodeTitle.textContent = defaultNode.name;
+        if (nodeType) nodeType.textContent = defaultNode.type;
+        if (nodeDesc) nodeDesc.textContent = defaultNode.description;
+        if (nodeMetric) nodeMetric.textContent = defaultNode.metrics;
+        if (nodeBadgeDot) {
+          nodeBadgeDot.style.backgroundColor = `#06b6d4`;
+          nodeBadgeDot.style.boxShadow = `0 0 12px #06b6d4`;
+        }
+      }
+    });
+  }
+
+  // Cleanup on page transitions
+  document.addEventListener("astro:before-swap", () => {
+    sceneInstance?.destroy();
+  });
+</script>

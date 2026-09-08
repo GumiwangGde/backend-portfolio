@@ -1,18 +1,20 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import About from "../components/About.astro";
 import Hero from "../components/Hero.astro";
-import Skills from "../components/Skills.astro";
+import About from "../components/About.astro";
 import Projects from "../components/Projects.astro";
 import Experience from "../components/Experience.astro";
-import Contacts from "../components/Contact.astro";
+import Contact from "../components/Contact.astro";
+import { profile } from "../data/profile";
 ---
 
-<MainLayout title="Gumiwang Gde | Backend Developer">
+<MainLayout 
+  title={`${profile.name} — ${profile.titles[0]} & ${profile.titles[1]}`}
+  description={profile.tagline}
+>
   <Hero />
   <About />
-  <Skills />
   <Projects />
   <Experience />
-  <Contacts />
+  <Contact />
 </MainLayout>
