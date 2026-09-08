@@ -23,12 +23,12 @@ export const profile: Profile = {
   shortName: "Gumiwang Gde",
   initials: "GD",
   titles: [
-    "Backend & Distributed Systems Engineer",
-    "Former CTO at PT Neurobyte",
+    "Software Engineer",
+    "Backend & Distributed Systems Specialist",
     "Informatics Engineering Graduate (PENS)"
   ],
-  bio: "Software Engineer with a primary focus on backend systems, custom WordPress architectures, and distributed services. Experienced in engineering web platforms, API development, and technical team leadership.",
-  tagline: "Building resilient backend architectures, custom CMS ecosystems, and web platforms.",
+  bio: "Software Engineer specializing in backend infrastructure, custom web architectures, and distributed services. Passionate about building reliable APIs, scalable database systems, and clean, maintainable web platforms.",
+  tagline: "Building resilient backend architectures, scalable web platforms, and custom CMS ecosystems.",
   location: "Surabaya, Indonesia",
   email: "gugumgde26@gmail.com",
   status: {
