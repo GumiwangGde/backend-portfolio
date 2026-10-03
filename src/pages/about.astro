@@ -1,0 +1,136 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { profile } from "../data/profile";
+import { education, certifications, languages } from "../data/education";
+---
+
+<MainLayout 
+  title={`About — ${profile.name}`}
+  description="Software Developer background, PENS education (GPA 3.69), certifications, and technical principles."
+  hideFooter={true}
+>
+  <div class="h-full min-h-[calc(100vh-6rem)] flex flex-col justify-center py-6 sm:py-10">
+    
+    <div class="w-full space-y-10 sm:space-y-14 my-auto">
+      
+      <!-- Top Hero Section: Standalone Editorial Layout (Solidroad Style) -->
+      <div class="space-y-4 max-w-4xl text-left">
+        
+        <!-- Badge with Icon -->
+        <div class="reveal-1">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/4 text-xs font-medium text-[#1d1d1f] border border-black/6">
+            <span>Professional Overview</span>
+          </span>
+        </div>
+
+        <!-- Big Clean Headline -->
+        <h1 class="reveal-2 text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#1d1d1f] leading-[1.18]">
+          Practical Engineering with Real-World Focus.
+        </h1>
+
+        <!-- Copywriting Body Paragraphs -->
+        <div class="reveal-3 space-y-3.5 text-sm sm:text-base text-[#6e6e73] font-normal leading-relaxed max-w-3xl pt-1">
+          <p>
+            I am a Software Developer with practical experience building full-stack web platforms, distributed backend services, and native-grade mobile applications. My work centers on TypeScript, JavaScript, Node.js, Next.js, Vue 3, Flutter, and PostgreSQL.
+          </p>
+          <p>
+            Throughout my development experience, I have delivered edge-accelerated caching with sub-20ms redirect response times, atomic database transactions using PostgreSQL locks, secure encrypted session management (AES-256-GCM), and containerized automated CI/CD deployments.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Bottom Metric / Details Row (Solidroad Divider Layout) -->
+      <div class="pt-6 sm:pt-8 border-t border-black/8 grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-start">
+        
+        <!-- Column 1: Education (PENS) -->
+        <div class="reveal-4 md:col-span-4 lg:col-span-3 space-y-3 text-left">
+          <span class="text-xs font-semibold uppercase tracking-wider text-[#86868b]">
+            Education
+          </span>
+
+          <div class="text-3xl sm:text-4xl font-normal text-[#1d1d1f] tracking-tight">
+            3.69 <span class="text-sm text-[#86868b] font-normal">/ 4.00 GPA</span>
+          </div>
+
+          <div class="space-y-0.5">
+            <h3 class="text-sm sm:text-base font-bold text-[#1d1d1f] tracking-tight">
+              {education.institution}
+            </h3>
+            <p class="text-xs text-[#6e6e73]">
+              {education.degree} • {education.period}
+            </p>
+          </div>
+        </div>
+
+        <!-- Column 2: Verified Certifications (with vertical divider shifted left) -->
+        <div class="reveal-4 md:col-span-5 lg:col-span-5 border-t md:border-t-0 md:border-l border-black/12 pt-6 md:pt-0 md:pl-6 lg:pl-8 space-y-3 text-left">
+          <span class="text-xs font-semibold uppercase tracking-wider text-[#86868b]">
+            Verified Certifications
+          </span>
+
+          <div class="space-y-3 pt-0.5">
+            {
+              certifications.map((cert) => (
+                <div class="space-y-0.5">
+                  <h4 class="text-xs sm:text-sm font-bold text-[#1d1d1f]">
+                    {cert.title}
+                  </h4>
+                  <p class="text-xs text-[#6e6e73] leading-relaxed">
+                    {cert.issuer}
+                  </p>
+                  <div class="flex items-center gap-2 text-[11px] pt-0.5">
+                    <span class="font-medium text-[#86868b]">Issued {cert.year}</span>
+                    {cert.verifyUrl && (
+                      <>
+                        <span class="text-black/20">•</span>
+                        <a
+                          href={cert.verifyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="font-semibold text-[#0071e3] hover:underline inline-flex items-center gap-0.5"
+                        >
+                          <span>View Certificate</span>
+                          <span class="text-[10px]">↗</span>
+                        </a>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Column 3: Languages (with vertical divider) -->
+        <div class="reveal-5 md:col-span-3 lg:col-span-4 border-t md:border-t-0 md:border-l border-black/12 pt-6 md:pt-0 md:pl-6 lg:pl-8 space-y-3 text-left">
+          <span class="text-xs font-semibold uppercase tracking-wider text-[#86868b]">
+            Languages
+          </span>
+
+          <div class="text-3xl sm:text-4xl font-normal text-[#1d1d1f] tracking-tight">
+            Fluent
+          </div>
+
+          <div class="space-y-2.5 pt-0.5">
+            {
+              languages.map((lang) => (
+                <div class="space-y-0.5">
+                  <h4 class="text-xs sm:text-sm font-bold text-[#1d1d1f]">
+                    {lang.language}
+                  </h4>
+                  <p class="text-xs text-[#6e6e73]">
+                    {lang.proficiency}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</MainLayout>

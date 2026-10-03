@@ -1,59 +1,55 @@
-export interface Experience {
-  company: string;
+export interface WorkExperience {
   role: string;
+  company: string;
   period: string;
-  location: string;
-  type: "work" | "leadership" | "education";
-  badge?: string;
-  description?: string;
-  techStack?: string[];
+  location?: string;
+  type: "freelance" | "internship" | "fulltime";
+  stack: string[];
   points: string[];
 }
 
-export const experiences: Experience[] = [
+export const workExperiences: WorkExperience[] = [
   {
-    company: "PT Neurobyte",
-    role: "Chief Technology Officer (CTO)",
-    period: "Dec 2025 - Mar 2026",
-    location: "Indonesia",
-    type: "leadership",
-    badge: "Executive Leadership",
-    description: "Led technology strategy, microservices architecture, and engineering squads.",
-    techStack: ["Microservices", "Cloud Infrastructure", "System Architecture", "Security", "Team Leadership"],
+    role: "Full Stack Developer",
+    company: "Freelance",
+    period: "June 2025 – Present",
+    type: "freelance",
+    stack: [
+      "Python",
+      "PHP / Laravel",
+      "Node.js",
+      "React",
+      "Next.js",
+      "Vue.js",
+      "WordPress",
+      "Docker"
+    ],
     points: [
-      "Formulated high-level technical vision and architectural roadmaps for scalable software platforms.",
-      "Overseeing backend infrastructure design, establishing microservice standards, and enforcing deployment reliability.",
-      "Directed cross-functional engineering teams, code review standards, and sprint deliveries."
+      "Developed and maintained custom full-stack web applications and REST APIs using Node.js, PHP/Laravel, and Python, integrated with responsive frontends in React, Next.js, and Vue.js.",
+      "Built and launched production websites and company portals using WordPress and Elementor, handling custom layout theming, responsive design, and third-party plugin integrations.",
+      "Engineered custom Python and Node.js automation scripts, data processing tools, and third-party API integrations to streamline manual client workflows.",
+      "Handled debugging, troubleshooting, and feature additions across existing codebases, deploying containerized applications with Docker and Nginx on Linux VPS servers."
     ]
   },
   {
+    role: "Backend Developer Intern",
     company: "PT Wahana Meditek Indonesia",
-    role: "Backend Developer",
-    period: "June 2025 - Dec 2025",
-    location: "Indonesia",
-    type: "work",
-    badge: "Enterprise Backend",
-    description: "Built and optimized high-reliability backend systems for hospital workflows.",
-    techStack: ["Node.js", "Express.js", "PostgreSQL", "Zod", "Docker", "REST APIs"],
+    period: "June 2025 – December 2025",
+    type: "internship",
+    stack: [
+      "Node.js",
+      "Express.js",
+      "Sequelize",
+      "MySQL",
+      "WebSockets",
+      "GitLab CI/CD",
+      "Docker"
+    ],
     points: [
-      "Engineered mission-critical hospital billing and pharmacy inventory microservices with atomic transactional guarantees.",
-      "Optimized relational database queries in PostgreSQL, improving API response times across core modules.",
-      "Implemented automated input validation using Zod schemas and secured endpoints with JWT authentication."
-    ]
-  },
-  {
-    company: "Politeknik Elektronika Negeri Surabaya (PENS)",
-    role: "Informatics Engineering Graduate",
-    period: "Aug 2023 - Aug 2026",
-    location: "Surabaya, Indonesia",
-    type: "education",
-    badge: "Graduated",
-    description: "Graduated with strong foundation in distributed systems, algorithms, and software engineering theory.",
-    techStack: ["Data Structures", "Distributed Systems", "Database Design", "Operating Systems", "Networking"],
-    points: [
-      "Completed comprehensive curriculum covering computational theory, advanced data structures, concurrency, and distributed system design.",
-      "Developed production-grade software projects alongside academic coursework and technical lab research.",
-      "Active collaboration on research projects and engineering community mentoring."
+      "Maintained and expanded RESTful backend services using Node.js and Express.js, adapting to an existing codebase and complex data workflows for hospital operational systems.",
+      "Designed relational database schemas and optimized MySQL queries using Sequelize ORM, improving data integrity and transaction performance across hospital inventory and billing modules.",
+      "Implemented WebSocket-based event-driven processing to eliminate real-time transaction bottlenecks and maintain data consistency during concurrent staff usage.",
+      "Diagnosed and resolved edge-case backend data processing issues, managing containerized services with Docker and automated build pipelines via GitLab CI/CD."
     ]
   }
 ];

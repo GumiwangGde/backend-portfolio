@@ -1,24 +1,26 @@
 ---
 import Navbar from "../components/Navbar.astro";
-import EclipseArtwork from "../components/EclipseArtwork.astro";
 import "../styles/global.css";
 import { profile } from "../data/profile";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title?: string;
   description?: string;
+  hideFooter?: boolean;
 }
 
 const { 
-  title = `${profile.name} — ${profile.titles[0]} & ${profile.titles[1]}`,
-  description = profile.tagline
+  title = `${profile.name} — ${profile.titles[0]}`,
+  description = profile.summary,
+  hideFooter = false
 } = Astro.props;
 
 const currentYear = new Date().getFullYear();
 ---
 
 <!doctype html>
-<html lang="en" class="dark scroll-smooth bg-[#050b14] text-slate-200">
+<html lang="en" class="scroll-smooth bg-[#fbfbfd] text-[#1d1d1f]">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -38,51 +40,52 @@ const currentYear = new Date().getFullYear();
     <meta property="og:description" content={description} />
     <meta property="og:image" content="https://portfolio.gugum.my.id/og-image.jpg" />
 
-    <!-- Google Fonts: Instrument Serif, Inter, JetBrains Mono -->
+    <!-- Client Router for smooth transitions -->
+    <ClientRouter />
+
+    <!-- Google Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
     <!-- Google Site Verification -->
     <meta name="google-site-verification" content="qyyi6TaTO3Gp0ZiOp9n0HR4lBkCxHXuVt5zEX8St12o" />
   </head>
-  <body class="bg-[#050b14] text-slate-200 antialiased min-h-screen relative overflow-x-hidden selection:bg-sky-400 selection:text-[#050b14]">
+  <body class="bg-[#fbfbfd] text-[#1d1d1f] antialiased min-h-screen relative flex flex-col justify-between selection:bg-[#0071e3] selection:text-white">
     
-    <!-- Eclipse Halo & 3D Sculpture Background -->
-    <EclipseArtwork />
-
-    <!-- Architectural Hairline Grid Lines (Deep Midnight & Ice Platinum) -->
-    <div class="fixed inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-2 md:grid-cols-4 gap-0" aria-hidden="true">
-      <div class="border-l border-sky-400/[0.04] h-full"></div>
-      <div class="border-l border-sky-400/[0.04] h-full"></div>
-      <div class="border-l border-sky-400/[0.04] h-full"></div>
-      <div class="border-l border-r border-sky-400/[0.04] h-full"></div>
+    <!-- Apple Top Ambient Radial Light (Light Mode) -->
+    <div class="fixed top-0 inset-x-0 h-112.5 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+      <div class="absolute -top-55 left-1/2 -translate-x-1/2 w-200 sm:w-300 h-112.5 bg-linear-to-b from-[#0071e3]/10 via-[#5e5ce6]/5 to-transparent rounded-full blur-[100px]"></div>
     </div>
 
-    <!-- Minimalist Editorial Navigation -->
+    <!-- Apple Floating Pill Navigation -->
     <Navbar />
 
-    <!-- Main Editorial Content -->
-    <main class="relative z-10">
+    <!-- Main Page Content -->
+    <main class={`relative z-10 ${hideFooter ? 'min-h-screen pt-20 md:pt-14 pb-6 w-full max-w-425 px-6 sm:px-12 md:px-16 lg:px-20 xl:px-24' : 'pt-28 sm:pt-32 pb-24 max-w-6xl px-6 sm:px-8'} mx-auto w-full grow flex flex-col justify-center`}>
       <slot />
     </main>
 
-    <!-- Editorial Footer -->
-    <footer class="relative z-10 border-t border-sky-500/[0.1] bg-[#050b14]/90 backdrop-blur-md py-12 px-6 sm:px-12">
-      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 font-mono text-[11px] text-slate-400 tracking-wider uppercase">
-        <div class="flex items-center gap-4">
-          <span class="text-white font-medium">{profile.name}</span>
-          <span class="text-slate-500">/</span>
-          <span class="text-slate-300">{profile.titles[0]}</span>
-        </div>
+    <!-- Apple Minimalist Footer -->
+    {
+      !hideFooter && (
+        <footer class="relative z-10 border-t border-black/6 bg-white/80 backdrop-blur-xl py-10 px-6 sm:px-8">
+          <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#86868b]">
+            <div class="flex items-center gap-3">
+              <span class="text-[#1d1d1f] font-medium">{profile.name}</span>
+              <span>•</span>
+              <span>{profile.titles[0]}</span>
+            </div>
 
-        <div class="flex items-center gap-6">
-          <span>SURABAYA, INDONESIA</span>
-          <span class="text-sky-400/80">•</span>
-          <span>© {currentYear}</span>
-        </div>
-      </div>
-    </footer>
+            <div class="flex items-center gap-4">
+              <span>{profile.location}</span>
+              <span>•</span>
+              <span>Copyright © {currentYear}</span>
+            </div>
+          </div>
+        </footer>
+      )
+    }
 
   </body>
 </html>

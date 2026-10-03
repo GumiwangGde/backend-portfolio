@@ -1,0 +1,31 @@
+---
+---
+
+<div class="relative w-full h-112.5 sm:h-135 md:h-155 lg:h-180 xl:h-195 flex items-center justify-center">
+  <!-- Subtle Ambient Glow -->
+  <div class="absolute inset-0 bg-linear-to-tr from-[#0071e3]/10 via-[#5e5ce6]/5 to-transparent rounded-full blur-3xl opacity-70 pointer-events-none"></div>
+
+  <!-- 3D Canvas Container -->
+  <div id="three-dolphin-container" class="w-full h-full cursor-grab active:cursor-grabbing relative z-10"></div>
+
+  <!-- Subtle Minimalist Hint -->
+  <div class="absolute bottom-2 right-4 text-[10px] text-[#86868b] pointer-events-none opacity-60 font-mono">
+    <span>Interactive 3D • Drag to orbit</span>
+  </div>
+</div>
+
+<script>
+  import { initThreeDolphin } from "../scripts/three-dolphin";
+
+  function mount() {
+    initThreeDolphin("three-dolphin-container");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mount);
+  } else {
+    mount();
+  }
+
+  document.addEventListener("astro:page-load", mount);
+</script>

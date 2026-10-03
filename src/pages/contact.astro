@@ -1,0 +1,257 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { profile } from "../data/profile";
+---
+
+<MainLayout 
+  title={`Contact — ${profile.name}`}
+  description="Get in touch with Gumiwang Gde Derazatna for software engineering opportunities, backend consulting, or full-time roles."
+  hideFooter={true}
+>
+  <div class="h-full min-h-[calc(100vh-5rem)] flex flex-col justify-center items-center">
+    
+    <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 xl:gap-24 items-center my-auto py-4 md:py-0">
+      
+      <!-- Left Column: Typography, Badge, Paragraph & Manual Reachout -->
+      <div class="md:col-span-6 lg:col-span-5 xl:col-span-5 flex flex-col justify-center items-start text-left space-y-4 sm:space-y-6 z-10">
+        <!-- Big Main Headline -->
+        <div class="reveal-2 space-y-1">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-[#1d1d1f] leading-tight sm:leading-[1.08]">
+            Let’s Get In <br class="hidden sm:inline" />
+            <span class="apple-headline">Touch.</span>
+          </h1>
+        </div>
+
+        <!-- Description Paragraph -->
+        <p class="reveal-3 text-sm sm:text-base text-[#6e6e73] font-normal leading-relaxed max-w-lg">
+          Have a project in mind, looking for a full-stack or backend engineer, or simply want to connect? Send a message and let's create something exceptional together.
+        </p>
+
+        <!-- Manual Email Reachout Card -->
+        <div class="reveal-4 pt-1 sm:pt-2 space-y-2 w-full max-w-md">
+          <p class="text-xs sm:text-sm text-[#86868b] font-medium">
+            Or just reach out manually to
+          </p>
+
+          <div class="flex items-center justify-between gap-3 p-2 pl-3.5 rounded-2xl bg-white/80 border border-black/8 shadow-sm backdrop-blur-md">
+            <a
+              href={`mailto:${profile.email}`}
+              class="text-xs sm:text-sm font-semibold text-[#0071e3] hover:underline truncate"
+            >
+              {profile.email}
+            </a>
+
+            <button
+              id="copy-email-btn"
+              type="button"
+              class="apple-btn-secondary px-3 py-1.5 text-xs font-medium cursor-pointer shrink-0"
+              title="Copy email"
+            >
+              <span id="copy-label">Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Neutral Social Links -->
+        <div class="reveal-5 flex items-center gap-2.5 pt-1 text-[#6e6e73]">
+          <!-- LinkedIn -->
+          <a
+            href={profile.social.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/4 hover:bg-black/8 hover:text-[#1d1d1f] text-[#6e6e73] flex items-center justify-center transition-all"
+            aria-label="LinkedIn"
+          >
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.25c-.9 0-1.63.73-1.63 1.63s.73 1.63 1.63 1.63 1.63-.73 1.63-1.63c0-.9-.73-1.63-1.63-1.63Z" />
+            </svg>
+          </a>
+          
+          <!-- GitHub -->
+          <a
+            href={profile.social.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/4 hover:bg-black/8 hover:text-[#1d1d1f] text-[#6e6e73] flex items-center justify-center transition-all"
+            aria-label="GitHub"
+          >
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z" />
+            </svg>
+          </a>
+
+          <!-- WhatsApp -->
+          <a
+            href={profile.social.phone}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/4 hover:bg-black/8 hover:text-[#1d1d1f] text-[#6e6e73] flex items-center justify-center transition-all"
+            aria-label="WhatsApp"
+          >
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.64c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.71 4.3 3.8 2.53 1.09 2.53.73 2.99.69.46-.04 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.18-.48-.31Z" />
+            </svg>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Direct Message Form Card -->
+      <div class="reveal-3 md:col-span-6 lg:col-span-7 xl:col-span-7 apple-card rounded-3xl p-6 sm:p-8 lg:p-10 space-y-4">
+        <div class="space-y-1">
+          <h3 class="text-xl sm:text-2xl font-bold text-[#1d1d1f] tracking-tight">
+            Send a Direct Message
+          </h3>
+          <p class="text-xs sm:text-sm text-[#86868b]">
+            Fill out the form below and I'll get back to you within 24 hours.
+          </p>
+        </div>
+
+        <form
+          action="https://api.web3forms.com/submit"
+          method="POST"
+          class="space-y-4 pt-1"
+          id="contact-form"
+        >
+          <input
+            type="hidden"
+            name="access_key"
+            value={import.meta.env.PUBLIC_WEB3FORMS_KEY}
+          />
+          <input type="hidden" name="from_name" value="Portfolio Gumiwang" />
+          <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div class="space-y-1.5">
+              <label for="name" class="block text-xs font-medium text-[#6e6e73]">
+                Your Name <span class="text-[#0071e3]">*</span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                required
+                placeholder="e.g. Alex Morgan"
+                class="w-full px-4 py-2.5 rounded-xl bg-black/2 border border-black/8 text-[#1d1d1f] placeholder-[#94a3b8] focus:bg-white focus:border-[#0071e3] focus:ring-2 focus:ring-[#0071e3]/20 text-xs sm:text-sm outline-none transition-all"
+              />
+            </div>
+
+            <div class="space-y-1.5">
+              <label for="email" class="block text-xs font-medium text-[#6e6e73]">
+                Your Email <span class="text-[#0071e3]">*</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                required
+                placeholder="alex@example.com"
+                class="w-full px-4 py-2.5 rounded-xl bg-black/2 border border-black/8 text-[#1d1d1f] placeholder-[#94a3b8] focus:bg-white focus:border-[#0071e3] focus:ring-2 focus:ring-[#0071e3]/20 text-xs sm:text-sm outline-none transition-all"
+              />
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="message" class="block text-xs font-medium text-[#6e6e73]">
+              Message <span class="text-[#0071e3]">*</span>
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+              placeholder="Describe your project, question, or opportunity..."
+              class="w-full px-4 py-2.5 rounded-xl bg-black/2 border border-black/8 text-[#1d1d1f] placeholder-[#94a3b8] focus:bg-white focus:border-[#0071e3] focus:ring-2 focus:ring-[#0071e3]/20 text-xs sm:text-sm outline-none transition-all resize-none"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            id="btn-submit"
+            class="apple-btn-primary w-full py-3 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/20 active:scale-98 transition-all"
+          >
+            <span>Send Message</span>
+            <span>→</span>
+          </button>
+
+          <p id="form-result" class="text-xs text-center font-medium"></p>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</MainLayout>
+
+<script is:inline>
+  const copyBtn = document.getElementById("copy-email-btn");
+  const copyLabel = document.getElementById("copy-label");
+
+  copyBtn?.addEventListener("click", () => {
+    navigator.clipboard.writeText("gugumgde26@gmail.com");
+    if (copyLabel) copyLabel.textContent = "Copied ✓";
+    setTimeout(() => {
+      if (copyLabel) copyLabel.textContent = "Copy";
+    }, 2000);
+  });
+
+  const form = document.getElementById("contact-form");
+  const result = document.getElementById("form-result");
+  const submitBtn = document.getElementById("btn-submit");
+
+  form?.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+    
+    if (result) {
+      result.textContent = "Sending message...";
+      result.className = "text-xs text-center text-[#0071e3]";
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = "0.7";
+    }
+
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    })
+      .then(async (response) => {
+        let resJson = await response.json();
+        if (response.status === 200) {
+          if (result) {
+            result.textContent = "Message successfully sent!";
+            result.className = "text-xs text-center text-emerald-600 font-semibold";
+          }
+          form.reset();
+        } else {
+          if (result) {
+            result.textContent = resJson.message || "Failed to send message.";
+            result.className = "text-xs text-center text-rose-600 font-semibold";
+          }
+        }
+      })
+      .catch(() => {
+        if (result) {
+          result.textContent = "Network error. Please email directly to gugumgde26@gmail.com.";
+          result.className = "text-xs text-center text-rose-600 font-semibold";
+        }
+      })
+      .finally(() => {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+        }
+        setTimeout(() => {
+          if (result) result.textContent = "";
+        }, 5000);
+      });
+  });
+</script>

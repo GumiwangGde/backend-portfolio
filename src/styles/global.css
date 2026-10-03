@@ -3,78 +3,146 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
-    background-color: #050b14;
+    color-scheme: light;
+    background-color: #fbfbfd;
   }
   
   body {
-    background-color: #050b14;
-    color: #e2e8f0;
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #fbfbfd;
+    color: #1d1d1f;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    background-color: #38bdf8;
-    color: #050b14;
+    background-color: #0071e3;
+    color: #ffffff;
   }
 
-  /* Ultra-minimalist midnight-ice scrollbar */
+  /* Apple-style minimalist light scrollbar */
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #050b14;
+    background: #fbfbfd;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e293b;
-    border-radius: 2px;
+    background: #d2d2d7;
+    border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #38bdf8;
+    background: #a1a1a6;
   }
 }
 
-/* Editorial Typography */
-.font-serif-display {
-  font-family: 'Instrument Serif', 'Playfair Display', Georgia, serif;
-  font-weight: 400;
+/* Apple Typography Utilities */
+.apple-headline {
+  background: linear-gradient(180deg, #1d1d1f 0%, #424245 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.italic-serif {
-  font-family: 'Instrument Serif', 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
+.apple-subheadline {
+  color: #6e6e73;
 }
 
-/* Fine hairline borders and dividers with subtle ice tint */
-.hairline-border {
-  border-color: rgba(148, 163, 184, 0.12);
+.apple-blue {
+  color: #0071e3;
 }
 
-.hairline-border-b {
-  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+/* Apple Bento Glass Cards (Light Mode) */
+.apple-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.hairline-border-t {
-  border-top: 1px solid rgba(148, 163, 184, 0.12);
+.apple-card:hover {
+  border-color: rgba(0, 0, 0, 0.14);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 1);
 }
 
-.hairline-border-r {
-  border-right: 1px solid rgba(148, 163, 184, 0.12);
+/* Apple Pill UI Components */
+.apple-pill {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #1d1d1f;
+  backdrop-filter: blur(12px);
 }
 
-.hairline-border-l {
-  border-left: 1px solid rgba(148, 163, 184, 0.12);
+/* Apple Buttons */
+.apple-btn-primary {
+  background: #0071e3;
+  color: #ffffff;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Deep Midnight Ink & Ice Glow Utility */
-.eclipse-glow-ice {
-  background: radial-gradient(circle at center, rgba(56, 189, 248, 0.18) 0%, rgba(96, 165, 250, 0.05) 50%, transparent 75%);
+.apple-btn-primary:hover {
+  background: #0077ed;
+  box-shadow: 0 4px 16px rgba(0, 113, 227, 0.3);
 }
 
-.eclipse-ring-ice {
-  box-shadow: inset 0 0 90px rgba(56, 189, 248, 0.2), 0 0 140px rgba(96, 165, 250, 0.15);
+.apple-btn-secondary {
+  background: rgba(0, 0, 0, 0.04);
+  color: #1d1d1f;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.16);
+}
+
+/* Apple Smooth Page Text & Content Reveal Animations */
+@keyframes applePageReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+.reveal-1 {
+  animation: applePageReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both;
+  will-change: transform, opacity, filter;
+}
+
+.reveal-2 {
+  animation: applePageReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both;
+  will-change: transform, opacity, filter;
+}
+
+.reveal-3 {
+  animation: applePageReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.24s both;
+  will-change: transform, opacity, filter;
+}
+
+.reveal-4 {
+  animation: applePageReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both;
+  will-change: transform, opacity, filter;
+}
+
+.reveal-5 {
+  animation: applePageReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.44s both;
+  will-change: transform, opacity, filter;
+}
+
+.reveal-6 {
+  animation: applePageReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.54s both;
+  will-change: transform, opacity, filter;
 }

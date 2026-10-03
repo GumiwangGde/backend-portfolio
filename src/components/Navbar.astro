@@ -1,101 +1,229 @@
 ---
-import { profile } from "../data/profile";
+const currentPath = Astro.url.pathname;
 
 const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Selected Work", href: "#work" },
-  { name: "Experience", href: "#experience" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Experience", href: "/experience" },
+  { name: "Projects", href: "/projects" },
+  { name: "Contact", href: "/contact" },
 ];
+
+function isActive(href: string) {
+  if (href === "/") {
+    return currentPath === "/" || currentPath === "";
+  }
+  return currentPath.startsWith(href);
+}
 ---
 
-<header class="fixed top-0 inset-x-0 z-50 bg-[#050b14]/75 backdrop-blur-md border-b border-sky-500/[0.08] transition-all duration-300">
-  <div class="max-w-7xl mx-auto px-6 sm:px-12">
-    <div class="flex items-center justify-between h-20">
-      
-      <!-- Brandmark -->
-      <a href="#home" class="group flex items-center gap-3">
-        <span class="font-mono text-xs font-semibold tracking-[0.25em] text-white uppercase group-hover:text-sky-300 transition-colors">
-          GUMIWANG
-        </span>
-      </a>
-
-      <!-- Desktop Links -->
-      <nav class="hidden md:flex items-center gap-8 font-mono text-[11px] tracking-[0.18em] uppercase text-slate-400">
-        {
-          navLinks.map((link) => (
-            <a
-              href={link.href}
-              class="hover:text-white transition-colors relative py-1"
-            >
-              {link.name}
-            </a>
-          ))
-        }
-      </nav>
-
-      <!-- Right Indicator & Contact Trigger -->
-      <div class="flex items-center gap-6">
-        <a
-          href={`mailto:${profile.email}`}
-          class="hidden sm:inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase text-slate-400 hover:text-sky-300 transition-colors"
-        >
-          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
-          <span>AVAILABLE FOR ROLES</span>
-        </a>
-
-        <!-- Mobile Menu Button -->
-        <button
-          id="mobile-toggle"
-          class="md:hidden text-slate-400 hover:text-white p-2 focus:outline-none"
-          aria-label="Toggle Navigation"
-        >
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h16M4 16h16" />
-          </svg>
-        </button>
-      </div>
-
-    </div>
-
-    <!-- Mobile Dropdown -->
-    <div
-      id="mobile-dropdown"
-      class="hidden md:hidden py-6 border-t border-sky-500/[0.08] bg-[#050b14]/95 space-y-4 font-mono text-xs tracking-[0.2em] uppercase"
-    >
+<header class="fixed top-4 sm:top-6 inset-x-0 z-50 flex justify-center px-4 pointer-events-none" transition:persist>
+  <div id="navbar-container" class="pointer-events-auto relative flex items-center bg-white/85 backdrop-blur-2xl border border-black/8 rounded-full p-1.5 shadow-lg shadow-black/5">
+    
+    <!-- Base Navigation Links (Gray text layer) -->
+    <nav class="relative z-10 flex items-center gap-0.5 sm:gap-1" id="nav-list">
       {
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="mobile-link block text-slate-400 hover:text-sky-300 py-2"
+            data-nav-link
+            data-href={link.href}
+            class="px-3 sm:px-4 py-1.5 rounded-full text-xs font-medium text-[#6e6e73] hover:text-[#1d1d1f] transition-colors duration-150 whitespace-nowrap select-none cursor-pointer"
           >
             {link.name}
           </a>
         ))
       }
-      <a
-        href={`mailto:${profile.email}`}
-        class="mobile-link block text-white pt-2 border-t border-sky-500/[0.08]"
+    </nav>
+
+    <!-- Sliding Liquid Pill Indicator (Masked White text layer) -->
+    <div
+      id="nav-indicator"
+      class="absolute top-0 left-0 rounded-full bg-[#1d1d1f] overflow-hidden pointer-events-none z-20 will-change-transform shadow-md shadow-black/10"
+      style="opacity: 0; width: 0; height: 0; transform: translate3d(0, 0, 0);"
+    >
+      <div
+        id="nav-indicator-inner"
+        class="absolute top-0 left-0 p-1.5 flex items-center gap-0.5 sm:gap-1 will-change-transform"
+        style="transform: translate3d(0, 0, 0);"
       >
-        LET'S CONNECT ↗
-      </a>
+        {
+          navLinks.map((link) => (
+            <span
+              class="px-3 sm:px-4 py-1.5 rounded-full text-xs font-medium text-white whitespace-nowrap select-none"
+            >
+              {link.name}
+            </span>
+          ))
+        }
+      </div>
     </div>
 
   </div>
 </header>
 
 <script>
-  const toggle = document.getElementById("mobile-toggle");
-  const dropdown = document.getElementById("mobile-dropdown");
-  const mobileLinks = document.querySelectorAll(".mobile-link");
+  // Persistent spring physics state for water-like fluid animation
+  let posX = 0;
+  let posY = 0;
+  let posW = 0;
+  let posH = 0;
 
-  toggle?.addEventListener("click", () => {
-    dropdown?.classList.toggle("hidden");
-  });
+  let targetX = 0;
+  let targetY = 0;
+  let targetW = 0;
+  let targetH = 0;
 
-  mobileLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      dropdown?.classList.add("hidden");
+  let velX = 0;
+  let velW = 0;
+
+  let isRunning = false;
+  let isInitialized = false;
+  let lastTime = 0;
+
+  // Fluid water-like spring parameters
+  const STIFFNESS = 210; // Responsive fluid tension
+  const DAMPING = 20;    // Gentle, organic liquid settling
+
+  function getElements() {
+    const container = document.getElementById("navbar-container");
+    const indicator = document.getElementById("nav-indicator");
+    const indicatorInner = document.getElementById("nav-indicator-inner");
+    const navList = document.getElementById("nav-list");
+    return { container, indicator, indicatorInner, navList };
+  }
+
+  function getActiveLink(links: HTMLAnchorElement[]): HTMLAnchorElement | null {
+    const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+    return (
+      links.find((link) => {
+        const href = (link.getAttribute("href") || "").replace(/\/$/, "") || "/";
+        if (href === "/") return currentPath === "/";
+        return currentPath.startsWith(href);
+      }) || links[0] || null
+    );
+  }
+
+  function render(x: number, y: number, w: number, h: number) {
+    const { indicator, indicatorInner } = getElements();
+    if (!indicator || !indicatorInner) return;
+
+    indicator.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0)`;
+    indicator.style.width = `${w.toFixed(2)}px`;
+    indicator.style.height = `${h.toFixed(2)}px`;
+    indicator.style.opacity = "1";
+
+    indicatorInner.style.transform = `translate3d(${(-x).toFixed(2)}px, ${(-y).toFixed(2)}px, 0)`;
+  }
+
+  function animateLoop(now: number) {
+    if (!isRunning) return;
+
+    if (!lastTime) lastTime = now;
+    const dt = Math.min((now - lastTime) / 1000, 0.032);
+    lastTime = now;
+
+    // Spring equations: F = -k*(x - target) - d*v
+    const fx = -STIFFNESS * (posX - targetX) - DAMPING * velX;
+    velX += fx * dt;
+    posX += velX * dt;
+
+    const fw = -STIFFNESS * (posW - targetW) - DAMPING * velW;
+    velW += fw * dt;
+    posW += velW * dt;
+
+    render(posX, targetY, posW, targetH);
+
+    // Stop spring when settled
+    const dist = Math.abs(posX - targetX) + Math.abs(posW - targetW);
+    const speed = Math.abs(velX) + Math.abs(velW);
+
+    if (dist < 0.15 && speed < 0.15) {
+      posX = targetX;
+      posW = targetW;
+      velX = 0;
+      velW = 0;
+      render(posX, targetY, posW, targetH);
+      isRunning = false;
+      lastTime = 0;
+      return;
+    }
+
+    requestAnimationFrame(animateLoop);
+  }
+
+  function startSpring() {
+    if (!isRunning) {
+      isRunning = true;
+      lastTime = 0;
+      requestAnimationFrame(animateLoop);
+    }
+  }
+
+  function setTarget(target: HTMLElement | null, immediate = false) {
+    const { container } = getElements();
+    if (!target || !container) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+
+    targetX = targetRect.left - containerRect.left;
+    targetY = targetRect.top - containerRect.top;
+    targetW = targetRect.width;
+    targetH = targetRect.height;
+
+    if (immediate || !isInitialized) {
+      posX = targetX;
+      posY = targetY;
+      posW = targetW;
+      posH = targetH;
+      velX = 0;
+      velW = 0;
+      render(posX, targetY, posW, targetH);
+      isInitialized = true;
+    } else {
+      startSpring();
+    }
+  }
+
+  function setupNavbar() {
+    const { navList } = getElements();
+    if (!navList) return;
+
+    const links = Array.from(navList.querySelectorAll<HTMLAnchorElement>("[data-nav-link]"));
+    const activeLink = getActiveLink(links);
+
+    if (!isInitialized) {
+      setTarget(activeLink, true);
+    } else if (activeLink) {
+      // Keep track of active link smoothly
+      setTarget(activeLink, false);
+    }
+
+    // Attach click handlers
+    links.forEach((link) => {
+      link.onclick = () => {
+        setTarget(link, false);
+      };
     });
+  }
+
+  // Handle window resize
+  window.addEventListener("resize", () => {
+    const { navList } = getElements();
+    if (!navList) return;
+    const links = Array.from(navList.querySelectorAll<HTMLAnchorElement>("[data-nav-link]"));
+    const activeLink = getActiveLink(links);
+    if (activeLink) {
+      setTarget(activeLink, true);
+    }
   });
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupNavbar);
+  } else {
+    setupNavbar();
+  }
+
+  document.addEventListener("astro:page-load", setupNavbar);
 </script>
